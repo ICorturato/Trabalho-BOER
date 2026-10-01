@@ -101,21 +101,6 @@ class _ApiProductFormScreenState extends State<ApiProductFormScreen> {
           _imageUrl = _poofService.bytesToDataUri(bytes);
           _hasBgRemoved = false;
         });
-
-        // Sugere a remoção de fundo com a API Poof
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Foto carregada! Toque em "Remover Fundo (API Poof)" para tratá-la.'),
-              action: SnackBarAction(
-                label: 'Remover Fundo',
-                textColor: Colors.amber,
-                onPressed: _removeBackgroundWithPoof,
-              ),
-              duration: const Duration(seconds: 4),
-            ),
-          );
-        }
       }
     } catch (e) {
       if (mounted) {
@@ -127,12 +112,7 @@ class _ApiProductFormScreenState extends State<ApiProductFormScreen> {
   }
 
   Future<void> _removeBackgroundWithPoof() async {
-    if (_localImageBytes == null && _imageUrl.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, selecione uma imagem primeiro.')),
-      );
-      return;
-    }
+    if (_localImageBytes == null && _imageUrl.isEmpty) return;
 
     setState(() => _isRemovingBg = true);
 
@@ -162,19 +142,6 @@ class _ApiProductFormScreenState extends State<ApiProductFormScreen> {
           _imageUrl = _poofService.bytesToDataUri(processedBytes);
           _hasBgRemoved = true;
         });
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.auto_awesome, color: Colors.amber),
-                SizedBox(width: 8),
-                Text('Fundo removido com sucesso via API Poof!'),
-              ],
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
       }
     } catch (e) {
       if (mounted) {
@@ -219,14 +186,6 @@ class _ApiProductFormScreenState extends State<ApiProductFormScreen> {
       }
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(isEditing
-                ? 'Produto atualizado com sucesso na API REST (PUT)!'
-                : 'Produto cadastrado com sucesso na API REST (POST)!'),
-            backgroundColor: Colors.green,
-          ),
-        );
         Navigator.pop(context, true);
       }
     } catch (e) {

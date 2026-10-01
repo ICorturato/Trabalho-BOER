@@ -97,22 +97,9 @@ class _ApiProductsScreenState extends State<ApiProductsScreen> {
     );
 
     if (confirmed == true && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Excluindo produto na API REST...'),
-          duration: Duration(seconds: 1),
-        ),
-      );
-
       try {
         await _apiService.deleteProduct(product.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Produto "${product.name}" excluído com sucesso (HTTP DELETE)!'),
-              backgroundColor: Colors.green,
-            ),
-          );
           _loadProducts();
         }
       } catch (e) {

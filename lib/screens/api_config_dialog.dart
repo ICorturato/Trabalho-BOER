@@ -50,12 +50,6 @@ class _ApiConfigDialogState extends State<ApiConfigDialog> {
 
     if (mounted) {
       Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Configurações de API salvas com sucesso!'),
-          backgroundColor: Colors.green,
-        ),
-      );
     }
   }
 
